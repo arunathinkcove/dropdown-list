@@ -1,0 +1,55 @@
+<div class="container-fluid example-wrapper">
+  <div class="row">
+    <div class="col-xs-12 col-sm-4 example-col">
+      <p>Country:</p>
+      <kendo-dropdownlist
+        [data]="dataCountry"
+        [value]="selectedCountry"
+        [defaultItem]="defaultItemCountries"
+        textField="countryName"
+        valueField="countryId"
+        (valueChange)="handleCountryChange($event)"
+      >
+      </kendo-dropdownlist>
+    </div>
+    <div class="col-xs-12 col-sm-4 example-col">
+      <p>State:</p>
+      <kendo-dropdownlist
+        [disabled]="isDisabledStates"
+        [defaultItem]="defaultItemStates"
+        [data]="dataResultStates"
+        [value]="selectedState"
+        textField="stateName"
+        valueField="stateId"
+        (valueChange)="handleStateChange($event)"
+      >
+      </kendo-dropdownlist>
+    </div>
+    <div class="col-xs-12 col-sm-4 example-col">
+      <p>City:</p>
+      <kendo-dropdownlist
+        [disabled]="isDisabledCities"
+        [defaultItem]="defaultItemCities"
+        [data]="dataResultCities"
+        [value]="selectedCity"
+        textField="cityName"
+        valueField="cityId"
+        (valueChange)="handleCityChange($event)"
+      >
+      </kendo-dropdownlist>
+    </div>
+    <div class="col-xs-12 col-sm-4 example-col">
+      <p>Pincode:</p>
+      <kendo-dropdownlist
+        [disabled]="isDisabledPincodes"
+        [defaultItem]="defaultItemPincodes"
+        [data]="dataResultPincodes"
+        [value]="selectedPincode"
+        textField="pincodeName"
+        valueField="pincodeId"
+        (valueChange)="handlePincodeChange($event)"
+      >
+      </kendo-dropdownlist>
+    </div>
+  </div>
+</div>

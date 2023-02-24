@@ -1,0 +1,22 @@
+
+        kendo-dropdownlist {
+          width: 170px;
+          color:white;
+          background:green;
+         border-radius: 4em;
+
+
+
+      }
+      p{
+        font-size:20px;
+        font-weight:500px;
+        text-transform:uppercase;
+        color:blue;
+      }
+      * {
+      font-family: sans-serif;
+      font-weight: bold;
+      color: #0f0f0f;
+      border-color: #0f0f0f;
+    }

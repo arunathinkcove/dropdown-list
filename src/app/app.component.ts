@@ -1,62 +1,14 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'my-app',
-  template: `
-      <div class="container-fluid example-wrapper">
-          <div class="row">
-              <div class="col-xs-12 col-sm-4 example-col">
-                  <p>Country:</p>
-                  <kendo-dropdownlist
-                      [data]="dataCountry"
-                      [value]="selectedCountry"
-                      [defaultItem]="defaultItemCountries"
-                      textField="countryName"
-                      valueField="countryId"
-                      (valueChange)="handleCountryChange($event)"
-                  >
-                  </kendo-dropdownlist>
-              </div>
-              <div class="col-xs-12 col-sm-4 example-col">
-                  <p>State:</p>
-                  <kendo-dropdownlist
-                      [disabled]="isDisabledStates"
-                      [defaultItem]="defaultItemStates"
-                      [data]="dataResultStates"
-                      [value]="selectedState"
-                      textField="stateName"
-                      valueField="stateId"
-                      (valueChange)="handleStateChange($event)"
-                  >
-                  </kendo-dropdownlist>
-              </div>
-              <div class="col-xs-12 col-sm-4 example-col">
-                  <p>City:</p>
-                  <kendo-dropdownlist
-                      [disabled]="isDisabledCities"
-                      [defaultItem]="defaultItemCities"
-                      [data]="dataResultCities"
-                      [value]="selectedCity"
-                      textField="cityName"
-                      valueField="cityId"
-                      (valueChange)="handleCityChange($event)"
-                  >
-                  </kendo-dropdownlist>
-              </div>
-          </div>
-      </div>
-    `,
-  styles: [
-    `
-        kendo-dropdownlist {
-            width: 170px;
-        }
-    `,
-  ],
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
   public isDisabledStates = true;
   public isDisabledCities = true;
+  public isDisabledPincodes = true;
 
   public defaultItemCountries: { countryName: string; countryId: number } = {
     countryName: 'Select country',
@@ -72,7 +24,10 @@ export class AppComponent {
     cityName: 'Select city',
     cityId: null,
   };
-
+  public defaultItemPincodes: { pincodeName: string; pincodeId: number } = {
+    pincodeName: 'Select pincode',
+    pincodeId: null,
+  };
   public dataCountry: Array<{ countryName: string; countryId: number }> = [
     { countryName: 'India', countryId: 1 },
     { countryName: 'Singapore', countryId: 2 },
@@ -110,6 +65,36 @@ export class AppComponent {
     { cityName: 'Kuala Terengganu.', cityId: 11, stateId: 6 },
     { cityName: 'Alor Setar.', cityId: 12, stateId: 6 },
   ];
+  public dataPincodes: Array<{
+    pincodeName: string;
+    pincodeId: number;
+    cityId: number;
+  }> = [
+    { pincodeName: '600001', pincodeId: 1, cityId: 1 },
+    { pincodeName: '627803', pincodeId: 2, cityId: 1 },
+    { pincodeName: '605036', pincodeId: 3, cityId: 2 },
+    { pincodeName: '682001', pincodeId: 4, cityId: 2 },
+    { pincodeName: '799436', pincodeId: 5, cityId: 3 },
+    { pincodeName: '469752', pincodeId: 6, cityId: 3 },
+    { pincodeName: '787694', pincodeId: 7, cityId: 4 },
+    { pincodeName: '127999', pincodeId: 8, cityId: 4 },
+    { pincodeName: '10000', pincodeId: 9, cityId: 5 },
+    { pincodeName: '79100', pincodeId: 10, cityId: 5 },
+    { pincodeName: '20000', pincodeId: 11, cityId: 6 },
+    { pincodeName: '05000', pincodeId: 12, cityId: 6 },
+    { pincodeName: '600001', pincodeId: 13, cityId: 7 },
+    { pincodeName: '627803', pincodeId: 14, cityId: 7 },
+    { pincodeName: '605036', pincodeId: 15, cityId: 8 },
+    { pincodeName: '682001', pincodeId: 16, cityId: 8 },
+    { pincodeName: '799436', pincodeId: 17, cityId: 9 },
+    { pincodeName: '469752', pincodeId: 18, cityId: 9 },
+    { pincodeName: '787694', pincodeId: 19, cityId: 10 },
+    { pincodeName: '127999', pincodeId: 20, cityId: 10 },
+    { pincodeName: '10000', pincodeId: 21, cityId: 11 },
+    { pincodeName: '79100', pincodeId: 22, cityId: 11 },
+    { pincodeName: '20000', pincodeId: 23, cityId: 12 },
+    { pincodeName: '05000', pincodeId: 24, cityId: 12 },
+  ];
 
   public dataResultStates: Array<{
     stateName: string;
@@ -122,15 +107,22 @@ export class AppComponent {
     cityId: number;
     stateId: number;
   }>;
+  public dataResultPincodes: Array<{
+    pincodeName: string;
+    pincodeId: number;
+    cityId: number;
+  }>;
 
   public selectedCountry: { countryName: string; countryId: number };
   public selectedState: { stateName: string; stateId: number };
   public selectedCity: { cityName: string; cityId: number };
+  public selectedPincode: { pincodeName: string; pincodeId: number };
 
   handleCountryChange(value) {
     this.selectedCountry = value;
     this.selectedState = undefined;
     this.selectedCity = undefined;
+    this.selectedPincode = undefined;
 
     if (value.countryId === this.defaultItemCountries.countryId) {
       this.isDisabledStates = true;
@@ -163,5 +155,18 @@ export class AppComponent {
 
   handleCityChange(value) {
     this.selectedCity = value;
+    this.selectedPincode = undefined;
+    if (value.stateId === this.defaultItemCities.cityId) {
+      this.isDisabledPincodes = true;
+      this.dataResultPincodes = [];
+    } else {
+      this.isDisabledPincodes = false;
+      this.dataResultPincodes = this.dataPincodes.filter(
+        (s) => s.cityId === value.cityId
+      );
+    }
+  }
+  handlePincodeChange(value) {
+    this.selectedPincode = value;
   }
 }
